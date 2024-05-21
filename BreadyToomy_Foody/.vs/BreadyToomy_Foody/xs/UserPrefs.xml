@@ -1,22 +1,18 @@
 ﻿<Properties StartupConfiguration="{E20EF9F3-F50A-4EF2-957B-853C236475B5}|Default">
-  <Xamarin.Addins.Core.Project ActiveDebugTarget="MyAppleMacCatalystID" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.BreadyToomy__Foody PreferredExecutionTarget="MyAppleMacCatalystID" FirstBuild="True" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="BreadyToomy_Foody/MainPage.xaml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="BreadyToomy_Foody/Models/Product.cs">
     <Files>
       <File FileName="BreadyToomy_Foody/MainPage.xaml.cs" />
       <File FileName="BreadyToomy_Foody/MainPage.xaml" Line="19" Column="37" />
+      <File FileName="BreadyToomy_Foody/ViewModels/ProductManagementViewModel.cs" Line="17" Column="35" />
+      <File FileName="BreadyToomy_Foody/Models/Product.cs" Line="102" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="BreadyToomy_Foody">
-            <Node name="BreadyToomy_Foody" expanded="True">
+            <Node name="BreadyToomy_Foody">
+              <Node name="ViewModels" expanded="True" />
               <Node name="MainPage.xaml" expanded="True" />
             </Node>
           </Node>
@@ -24,4 +20,11 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.BreadyToomy__Foody PreferredExecutionTarget="MyAppleMacCatalystID" />
+  <Xamarin.Addins.Core.Project ActiveDebugTarget="MyAppleMacCatalystID" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
 </Properties>
