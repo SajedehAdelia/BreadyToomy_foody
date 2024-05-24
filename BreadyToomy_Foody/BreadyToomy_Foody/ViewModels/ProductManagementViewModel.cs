@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using BreadyToomy_Foody.Models;
 
@@ -30,6 +29,13 @@ namespace BreadyToomy_Foody.ViewModels
             }
         }
 
+        public ProductManagementViewModel()
+        {
+            Products = new ObservableCollection<Product>
+            {
+                //data
+            };
+        }
 
         public void AddProduct(Product product)
         {
@@ -42,7 +48,9 @@ namespace BreadyToomy_Foody.ViewModels
             if (existingProduct != null)
             {
                 existingProduct.Name = product.Name;
+                existingProduct.Recipe = product.Recipe;
                 existingProduct.Type = product.Type;
+                existingProduct.Description = product.Description;
                 existingProduct.Price = product.Price;
                 OnPropertyChanged(nameof(Products));
             }
@@ -58,14 +66,6 @@ namespace BreadyToomy_Foody.ViewModels
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public ProductManagementViewModel()
-        {
-            Products = new ObservableCollection<Product>
-            {
-                //our data will be defined here ??!!
-            };
         }
     }
 }

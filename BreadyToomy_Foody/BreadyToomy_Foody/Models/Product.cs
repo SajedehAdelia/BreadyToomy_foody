@@ -1,24 +1,94 @@
-﻿using System;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
+using System;
 namespace BreadyToomy_Foody.Models
 {
     public class Product
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public ProductType Type { get; set; }
-        public decimal Price { get; set; }
+        private int _id;
+        private string _name;
+        private string _description;
+        private ProductType _type;
+        private Recipe _recipe;
+        private decimal _price;
+        private bool _archived;
 
-        public Product(int id, string name, ProductType type, decimal price)
+        public int Id
         {
-            Id = id;
-            Name = name;
-            Type = type;
-            Price = price;
+          get => _id;
+            set
+            {
+                _id = value;
+                OnPropertyChanged();
+            }
         }
 
-        public decimal calculeTotalPrice(int quantity)
+        public string Name
         {
-            return quantity * Price;
+            get => _name;
+            set
+            {
+                _name = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Recipe Recipe
+        {
+            get => _recipe;
+            set
+            {
+                _recipe = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ProductType Type
+        {
+            get => _type;
+            set
+            {
+                _type = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Description
+        {
+            get => _description;
+            set
+            {
+                _description = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public decimal Price
+        {
+            get => _price;
+            set
+            {
+                _price = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool Archived
+        {
+            get => _archived;
+            set
+            {
+                _archived = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 

@@ -1,4 +1,0 @@
-/Users/adelia/DEV/project_c#/Professional/obj/Debug/net8.0/Professional.GeneratedMSBuildEditorConfig.editorconfig
-/Users/adelia/DEV/project_c#/Professional/obj/Debug/net8.0/Professional.AssemblyInfoInputs.cache
-/Users/adelia/DEV/project_c#/Professional/obj/Debug/net8.0/Professional.AssemblyInfo.cs
-/Users/adelia/DEV/project_c#/Professional/obj/Debug/net8.0/Professional.csproj.CoreCompileInputs.cache
