@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using BreadyToomy_Foody.Models;
 
 namespace BreadyToomy_Foody.ViewModels
@@ -30,41 +31,63 @@ namespace BreadyToomy_Foody.ViewModels
             }
         }
 
+        public ICommand AddRecipeStepCommand { get; }
+        public ICommand UpdateRecipeStepCommand { get; }
+        public ICommand DeleteRecipeStepCommand { get; }
+
         public RecipeStepManagementViewModel()
         {
-            RecipeSteps = new ObservableCollection<RecipeStep>
+            RecipeSteps = new ObservableCollection<RecipeStep>();
+            SelectedRecipeStep = new RecipeStep();
+
+            AddRecipeStepCommand = new Command(AddRecipeStep);
+            UpdateRecipeStepCommand = new Command(UpdateRecipeStep);
+            DeleteRecipeStepCommand = new Command(DeleteRecipeStep);
+        }
+
+        private void AddRecipeStep()
+        {
+            if (SelectedRecipeStep != null)
             {
-                //just to check if it works :)  
-                new RecipeStep { Id = 1, RecipeId = 1, Index = 0, StepDetails = "Preheat the oven to 200°C", Archived = false },
-                new RecipeStep { Id = 2, RecipeId = 1, Index = 1, StepDetails = "Mix flour and water", Archived = false }
-            };
+                RecipeSteps.Add(new RecipeStep
+                {
+                    Id = SelectedRecipeStep.Id,
+                    RecipeId = SelectedRecipeStep.RecipeId,
+                    Index = SelectedRecipeStep.Index,
+                    StepDetails = SelectedRecipeStep.StepDetails,
+                    Archived = SelectedRecipeStep.Archived
+                });
+
+                SelectedRecipeStep = new RecipeStep();
+                OnPropertyChanged(nameof(SelectedRecipeStep));
+            }
         }
 
-        public void AddRecipeStep(RecipeStep recipeStep)
+        private void UpdateRecipeStep()
         {
-            RecipeSteps.Add(recipeStep);
-        }
-
-        public void UpdateRecipeStep(RecipeStep recipeStep)
-        {
-            var existingRecipeStep = RecipeSteps.FirstOrDefault(rs => rs.Id == recipeStep.Id);
+            var existingRecipeStep = RecipeSteps.FirstOrDefault(rs => rs.Id == SelectedRecipeStep.Id);
             if (existingRecipeStep != null)
             {
-                existingRecipeStep.RecipeId = recipeStep.RecipeId;
-                existingRecipeStep.Index = recipeStep.Index;
-                existingRecipeStep.StepDetails = recipeStep.StepDetails;
-                existingRecipeStep.Archived = recipeStep.Archived;
+                existingRecipeStep.RecipeId = SelectedRecipeStep.RecipeId;
+                existingRecipeStep.Index = SelectedRecipeStep.Index;
+                existingRecipeStep.StepDetails = SelectedRecipeStep.StepDetails;
+                existingRecipeStep.Archived = SelectedRecipeStep.Archived;
                 OnPropertyChanged(nameof(RecipeSteps));
             }
         }
 
-        public void DeleteRecipeStep(RecipeStep recipeStep)
+        private void DeleteRecipeStep()
         {
-            RecipeSteps.Remove(recipeStep);
+            var recipeStepToDelete = RecipeSteps.FirstOrDefault(rs => rs.Id == SelectedRecipeStep.Id);
+            if (recipeStepToDelete != null)
+            {
+                RecipeSteps.Remove(recipeStepToDelete);
+                SelectedRecipeStep = new RecipeStep();
+                OnPropertyChanged(nameof(SelectedRecipeStep));
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
