@@ -1,6 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using BreadyToomy_Foody.Models;
 
 namespace BreadyToomy_Foody.ViewModels
@@ -29,40 +31,61 @@ namespace BreadyToomy_Foody.ViewModels
             }
         }
 
+        public ICommand AddProductCommand { get; }
+        public ICommand UpdateProductCommand { get; }
+        public ICommand DeleteProductCommand { get; }
+
         public ProductManagementViewModel()
         {
-            Products = new ObservableCollection<Product>
+            Products = new ObservableCollection<Product>();
+            SelectedProduct = new Product();
+
+            AddProductCommand = new Command(AddProduct);
+            UpdateProductCommand = new Command(UpdateProduct);
+            DeleteProductCommand = new Command(DeleteProduct);
+        }
+
+        private void AddProduct()
+        {
+            if (SelectedProduct != null)
             {
-                //data
-            };
+                Products.Add(new Product
+                {
+                    Id = SelectedProduct.Id,
+                    Name = SelectedProduct.Name,
+                    Type = SelectedProduct.Type,
+                    Price = SelectedProduct.Price
+                });
+
+                SelectedProduct = new Product();
+                OnPropertyChanged(nameof(SelectedProduct));
+            }
         }
 
-        public void AddProduct(Product product)
+        private void UpdateProduct()
         {
-            Products.Add(product);
-        }
-
-        public void UpdateProduct(Product product)
-        {
-            var existingProduct = Products.FirstOrDefault(p => p.Id == product.Id);
+            var existingProduct = Products.FirstOrDefault(p => p.Id == SelectedProduct.Id);
             if (existingProduct != null)
             {
-                existingProduct.Name = product.Name;
-                existingProduct.Recipe = product.Recipe;
-                existingProduct.Type = product.Type;
-                existingProduct.Description = product.Description;
-                existingProduct.Price = product.Price;
+                existingProduct.Name = SelectedProduct.Name;
+                existingProduct.Type = SelectedProduct.Type;
+                existingProduct.Price = SelectedProduct.Price;
                 OnPropertyChanged(nameof(Products));
             }
         }
 
-        public void DeleteProduct(Product product)
+        private void DeleteProduct()
         {
-            Products.Remove(product);
+            var productToDelete = Products.FirstOrDefault(p => p.Id == SelectedProduct.Id);
+            if (productToDelete != null)
+            {
+                Products.Remove(productToDelete);
+                SelectedProduct = new Product();
+                OnPropertyChanged(nameof(SelectedProduct));
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
