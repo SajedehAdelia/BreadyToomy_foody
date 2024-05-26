@@ -1,19 +1,29 @@
-﻿namespace BreadyToomy_Foody;
+﻿using Microsoft.Extensions.DependencyInjection;
+using BreadyToomy_Foody.Data;
 
-public static class MauiProgram
+namespace BreadyToomy_Foody
 {
-	public static MauiApp CreateMauiApp()
-	{
-		var builder = MauiApp.CreateBuilder();
-		builder
-			.UseMauiApp<App>()
-			.ConfigureFonts(fonts =>
-			{
-				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-			});
+    public static class MauiProgram
+    {
+        public static MauiApp CreateMauiApp()
+        {
+            var builder = MauiApp.CreateBuilder();
+            builder
+                .UseMauiApp<App>()
+                .ConfigureFonts(fonts =>
+                {
+                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                    fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                });
 
-		return builder.Build();
-	}
+            // Register the DbContext
+            builder.Services.AddDbContext<BreadyToomyContext>();
+
+            // Register view models
+            builder.Services.AddTransient<ProductManagementViewModel>();
+            // Register other view models as needed
+
+            return builder.Build();
+        }
+    }
 }
-
